@@ -5,7 +5,7 @@ Restoring a GitOps Kubernetes environment has a chicken-and-egg problem - how ca
 
 ## Disaster Recovery 
 
-Argo in installed first, and used it to install applications defined here. Next, external longhorn volume backups are restored. Finally, Gitea is restored and all application resources can be deployed.
+Argo is installed first, and used to install the application manifests defined here. Next, external longhorn volume backups are restored. Finally, Gitea is restored and all application resources can be deployed.
 
 Using Argo instead of Helm has the benefit of correct labels on install, which prevents applications from being stuck out of sync due to Helm labels. 
 
@@ -32,10 +32,10 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     helm repo update
     helm upgrade --install argo argo/argo-cd --version 8.1.3 -n argo --create-namespace
     ```
-1. Clone this repo and `cd` into it. Alternatively, copy `application.yaml` from this repo's root
-1. Apply the disaster recovery app-of-apps resource manifest `application.yaml`
+1. Clone this repo and `cd` into it. Alternatively, copy `app-of-apps.yaml` from this repo's root
+1. Apply the disaster recovery app-of-apps resource manifest `app-of-apps.yaml`
     ```sh
-    kubectl apply -f application.yaml
+    kubectl apply -f app-of-apps.yaml
     ```
 1. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
