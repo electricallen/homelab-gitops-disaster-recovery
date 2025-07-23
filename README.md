@@ -13,13 +13,14 @@ Using Argo instead of Helm has the benefit of correct labels on install, which p
 
 In order to recover from cluster failure or migrate to a new cluster, the following is required:
 
-* A fresh kubernetes cluster
+* Hardware capable of running k3s, ideally with 3 server nodes
 * Control of domain name. DDNS, routing, and DNS set up to route traffic to the cluster
 * The Kubernetes admin token
+* Backup restore credentials and URL
 
 ### Playbook
 
-1. Install k3s on the cluster using [k3s-ansbile](https://github.com/k3s-io/k3s-ansible), then run the `site` playbook:
+1. Install k3s on the cluster by cloning [k3s-ansbile](https://github.com/k3s-io/k3s-ansible), setting up the inventory, then running the `site` playbook:
     ```sh
     ansible-vault create vault-globals.yml
     ansible-vault edit vault-globals.yml 
@@ -32,7 +33,19 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     helm repo update
     helm upgrade --install argo argo/argo-cd --version 8.1.3 -n argo --create-namespace
     ```
-1. Clone this repo and `cd` into it. Alternatively, copy `app-of-apps.yaml` from this repo's root
+1. Clone this repo and `cd` into it
+1. Edit `longhorn-manifests.yaml` to add secrets and connection details for the backup store, then apply  (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file)). 
+
+    > [!NOTE]  
+    > The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
+    >   ```sh
+    >     "backup-target": s3://my-bucket@region/longhorn # `region` is ignored!
+    >     ...
+    >     AWS_ENDPOINTS: https://s3.us-east-005.backblazeb2.com
+    
+    ```sh
+    kubectl apply -f longhorn-manifests
+    ```
 1. Apply the disaster recovery app-of-apps resource manifest `app-of-apps.yaml`
     ```sh
     kubectl apply -f app-of-apps.yaml
