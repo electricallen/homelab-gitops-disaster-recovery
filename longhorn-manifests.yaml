@@ -5,7 +5,7 @@ metadata:
   namespace: longhorn-system
 data:
   default-resource.yaml: |
-    "backup-target": s3://my-bucket@region/longhorn
+    "backup-target": s3://my-bucket@ignored-region/longhorn
     "backup-target-credential-secret": longhorn-backblaze-credentials
 ---
 # Backblaze B2 Credentials for Longhorn
