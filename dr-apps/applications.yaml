@@ -35,6 +35,8 @@ spec:
     chart: gitea
     helm:
       parameters:
+      - name: global.storageClass
+        value: longhorn-non-replicated
       - name: persistence.size
         value: 5Gi
       - name: postgresql-ha.persistence.size

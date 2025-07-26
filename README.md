@@ -17,6 +17,7 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 * Control of domain name. DDNS, routing, and DNS set up to route traffic to the cluster
 * The Kubernetes admin token
 * Backup restore credentials and URL
+* Gitea admin credentials
 
 ### Playbook
 
@@ -34,10 +35,10 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     helm upgrade --install argocd argo/argo-cd --version 8.1.3 -n argocd --create-namespace
     ```
 1. Clone this repo and `cd` into it
-1. Copy the bootstrap manifest file, and populate with backblaze credentials. Then apply (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file))
+1. Copy the bootstrap manifest file. Edit it to with backblaze and Gitea credentials. Then apply (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file))
     ```sh
     cp example-bootstrap.yaml bootstrap.yaml
-    # Edit bootstrap.yaml to add backblaze credentials
+    # Edit bootstrap.yaml to add backblaze and gitea creds
     kubectl apply -f bootstrap.yaml
     ```
 1. Connect to the ArgoCD GUI and sync the app-of-apps

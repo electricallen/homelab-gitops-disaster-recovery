@@ -5,6 +5,23 @@ metadata:
   labels:
     name: longhorn-system
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gitea
+  labels:
+    name: gitea
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: gitea-admin-secret
+  namespace: gitea
+type: Opaque
+stringData:
+  username: gitea_admin
+  password: # Your password here
+---
 # Backblaze B2 Credentials for Longhorn
 apiVersion: v1
 kind: Secret
