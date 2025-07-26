@@ -26,3 +26,18 @@ stringData:
   AWS_ENDPOINTS: # https://s3.some-real-region.backblazeb2.com
   AWS_ACCESS_KEY_ID: # keyID in backblaze
   AWS_SECRET_ACCESS_KEY: # applicationKey in backblaze
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dr-apps
+  namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  project: default
+  source:
+    path: dr-apps
+    repoURL: https://github.com/electricallen/homelab-gitops-disaster-recovery.git
+    targetRevision: HEAD

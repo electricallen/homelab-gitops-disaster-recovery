@@ -29,16 +29,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  sources:
-  - chart: gitea
+  source:
+    chart: gitea
     helm:
-      valueFiles:
-      - $values/gitea/values.yaml
+      parameters:
+      - name: persistence.size
+        value: 5Gi
+      - name: postgresql-ha.persistence.size
+        value: 5Gi
     repoURL: https://dl.gitea.com/charts/
     targetRevision: 12.1.2
-  - ref: values
-    repoURL: https://github.com/electricallen/homelab-gitops-disaster-recovery.git
-    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
     namespace: gitea
