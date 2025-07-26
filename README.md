@@ -34,10 +34,10 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     helm upgrade --install argocd argo/argo-cd --version 8.1.3 -n argocd --create-namespace
     ```
 1. Clone this repo and `cd` into it
-1. Copy the bootstrap manifest file, and populate with backblaze backup settings. Then apply (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file))
+1. Copy the bootstrap manifest file, and populate with backblaze credentials. Then apply (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file))
     ```sh
     cp example-bootstrap.yaml bootstrap.yaml
-    # Edit bootstrap.yaml to add backup setings
+    # Edit bootstrap.yaml to add backblaze credentials
     kubectl apply -f bootstrap.yaml
     ```
 
@@ -50,18 +50,15 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 >   ```
 > 
 
-5. Apply the disaster recovery app-of-apps resource manifest `app-of-apps.yaml`
-    ```sh
-    kubectl apply -f app-of-apps.yaml
-    ```
-1. Connect to the ArgoCD GUI and sync the app-of-apps
+5. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
     # Note the admin password
     kubectl port-forward service/argocd-server -n argocd 8080:443
     # open the browser on http://localhost:8080 and accept the certificate
     ```
-1. Sync the longhorn and longhorn-sc apps. Connect to the Longhorn GUI and restore all volumes
+1. Sync the longhorn app. Connect to the Longhorn GUI
     ```sh
     kubectl port-forward service/longhorn-frontend -n longhorn-system 8081:80
     ```
+1. Edit the 
