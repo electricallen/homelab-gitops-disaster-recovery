@@ -36,13 +36,14 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 1. Clone this repo and `cd` into it
 1. Edit `longhorn/manifest.yaml` to add secrets and connection details for the backup store, then apply  (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file)). 
 
-    > [!NOTE]  
-    > The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
-    >   ```sh
-    >     "backup-target": s3://foo@region/longhorn # `region` is ignored!
-    >     ...
-    >     AWS_ENDPOINTS: https://s3.us-east-005.backblazeb2.com
-    
+> [!NOTE]  
+> The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
+>   ```sh
+>     "backup-target": s3://foo@region/longhorn # `region` is ignored!
+>     ...
+>     AWS_ENDPOINTS: https://s3.us-east-005.backblazeb2.com
+>   ```
+> 
     ```sh
     kubectl apply -f longhorn/manifest.yaml
     ```
