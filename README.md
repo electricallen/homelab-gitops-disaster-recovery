@@ -40,17 +40,7 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     # Edit bootstrap.yaml to add backblaze credentials
     kubectl apply -f bootstrap.yaml
     ```
-
-> [!NOTE]  
-> The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
->   ```sh
->     "backup-target": s3://foo@region/longhorn # `region` is ignored!
->     ...
->     AWS_ENDPOINTS: https://s3.us-east-005.backblazeb2.com
->   ```
-> 
-
-5. Connect to the ArgoCD GUI and sync the app-of-apps
+1. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
     # Note the admin password
@@ -61,4 +51,12 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```sh
     kubectl port-forward service/longhorn-frontend -n longhorn-system 8081:80
     ```
-1. Edit the 
+1. Add the S3 URL for the default backup target at `Settings > Backup Target`
+
+> [!NOTE]  
+> The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
+>   ```sh
+>     "backup-target": s3://foo@region/longhorn # `region` is ignored!
+>   ```
+
+8. Restore all volumes from Backblaze
