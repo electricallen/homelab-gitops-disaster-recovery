@@ -52,7 +52,9 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```
 1. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
-    kubectl port-forward service/argo-argocd-server -n argocd 8080:443
+    kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
+    # Note the admin password
+    kubectl port-forward service/argocd-server -n argocd 8080:443
     # open the browser on http://localhost:8080 and accept the certificate
     ```
 1. Sync the longhorn and longhorn-sc apps. Connect to the Longhorn GUI and restore all volumes
