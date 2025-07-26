@@ -1,0 +1,6 @@
+persistence:
+  size: 5Gi
+
+postgresql-ha:
+  persistence:
+    size: 5Gi

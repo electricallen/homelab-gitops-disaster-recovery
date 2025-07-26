@@ -1,6 +1,0 @@
-apiVersion: v2
-name: dr-apps
-description: Creates application CRDs for ArgoCD disaster recovery
-type: application
-version: 0.1.0 # Chart version
-appVersion: "1.0"

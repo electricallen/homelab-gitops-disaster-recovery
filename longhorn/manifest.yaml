@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: longhorn-default-resource
+  namespace: longhorn-system
+data:
+  default-resource.yaml: |
+    "backup-target": s3://my-bucket@ignored-region/longhorn
+    "backup-target-credential-secret": longhorn-backblaze-credentials
+---
+# Backblaze B2 Credentials for Longhorn
+apiVersion: v1
+kind: Secret
+metadata:
+  name: longhorn-backblaze-credentials
+  namespace: longhorn-system
+type: Opaque
+stringData:
+  AWS_ENDPOINTS: # https://s3.some-real-region.backblazeb2.com
+  AWS_ACCESS_KEY_ID: # keyID in backblaze
+  AWS_SECRET_ACCESS_KEY: # applicationKey in backblaze
