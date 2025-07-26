@@ -5,9 +5,9 @@ Restoring a GitOps Kubernetes environment has a chicken-and-egg problem - how ca
 
 ## Disaster Recovery 
 
-Argo is installed first, and used to install the application manifests defined here. Next, external longhorn volume backups are restored. Finally, Gitea is restored and all application resources can be deployed.
+ArgoCD is installed first, and used to install the application manifests defined here. Next, external longhorn volume backups are restored. Finally, Gitea is restored and all application resources can be deployed.
 
-Using Argo instead of Helm has the benefit of correct labels on install, which prevents applications from being stuck out of sync due to Helm labels. 
+ArgoCD only uses `helm` to produce manifests with `helm template`. This has the benefit of avoiding Helm labels on resources and prevents applications from being stuck out of sync. 
 
 ### Prerequisites 
 
@@ -31,20 +31,20 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```sh
     helm repo add argo https://argoproj.github.io/argo-helm
     helm repo update
-    helm upgrade --install argo argo/argo-cd --version 8.1.3 -n argo --create-namespace
+    helm upgrade --install argocd argo/argo-cd --version 8.1.3 -n argocd --create-namespace
     ```
 1. Clone this repo and `cd` into it
-1. Edit `longhorn-manifests.yaml` to add secrets and connection details for the backup store, then apply  (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file)). 
+1. Edit `longhorn/manifest.yaml` to add secrets and connection details for the backup store, then apply  (see [Longhorn docs here](https://longhorn.io/docs/1.9.0/snapshots-and-backups/backup-and-restore/set-backup-target/#set-the-default-backup-target-using-a-manifest-yaml-file)). 
 
     > [!NOTE]  
     > The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
     >   ```sh
-    >     "backup-target": s3://my-bucket@region/longhorn # `region` is ignored!
+    >     "backup-target": s3://foo@region/longhorn # `region` is ignored!
     >     ...
     >     AWS_ENDPOINTS: https://s3.us-east-005.backblazeb2.com
     
     ```sh
-    kubectl apply -f longhorn-manifests
+    kubectl apply -f longhorn/manifest.yaml
     ```
 1. Apply the disaster recovery app-of-apps resource manifest `app-of-apps.yaml`
     ```sh
@@ -52,7 +52,7 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```
 1. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
-    kubectl port-forward service/argo-cd-server -n argo-cd 8080:443
+    kubectl port-forward service/argo-argocd-server -n argocd 8080:443
     # open the browser on http://localhost:8080 and accept the certificate
     ```
 1. Sync the longhorn and longhorn-sc apps. Connect to the Longhorn GUI and restore all volumes

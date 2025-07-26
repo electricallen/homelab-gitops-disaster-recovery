@@ -1,3 +1,19 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: longhorn-manifests
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/electricallen/homelab-gitops-disaster-recovery.git
+    targetRevision: HEAD
+    path: longhorn
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: longhorn-system
+---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -25,12 +41,16 @@ metadata:
   namespace: argocd
 spec:
   project: default
-  source:
-    chart: gitea
+  sources:
+  - chart: gitea
+    helm:
+      valueFiles:
+      - $values/gitea/values.yaml
     repoURL: https://dl.gitea.com/charts/
     targetRevision: 12.1.2
-    helm:
-      releaseName: gitea
+  - ref: values
+    repoURL: https://github.com/electricallen/homelab-gitops-disaster-recovery.git
+    targetRevision: HEAD
   destination:
     server: https://kubernetes.default.svc
     namespace: gitea
