@@ -42,7 +42,7 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```
 1. Use `helm` to template and apply the bootstrap manifest (Note: installing with helm is not advised because of labelling conflicts with ArgoCD)
     ```sh
-    helm template bootstrap/ | kubectl apply -f -
+    helm template bootstrap | kubectl apply -f -
     ```
 1. Connect to the ArgoCD GUI and sync the app-of-apps
     ```sh
@@ -63,4 +63,8 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 >     "backup-target": s3://foo@region/longhorn # `region` is ignored!
 >   ```
 
-8. Restore all volumes from Backblaze
+8. Restore all volumes from Backblaze using the Longhorn GUI
+1. Connect to Gitea
+    ```sh
+    kubectl port-forward service/gitea-http -n gitea 8082:3000
+    ```
