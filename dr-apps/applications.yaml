@@ -37,6 +37,10 @@ spec:
       parameters:
       - name: global.storageClass
         value: longhorn-non-replicated
+      - name: gitea.admin.existingSecret
+        value: gitea-admin-secret
+      - name: gitea.admin.passwordMode
+        value: keepUpdated
       - name: persistence.size
         value: 5Gi
       - name: postgresql-ha.persistence.size

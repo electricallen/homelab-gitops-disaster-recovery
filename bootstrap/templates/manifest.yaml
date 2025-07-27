@@ -20,9 +20,8 @@ metadata:
 type: Opaque
 stringData:
   username: gitea_admin
-  password: # Your password here
+  password: {{ .Values.gitea.password }}
 ---
-# Backblaze B2 Credentials for Longhorn
 apiVersion: v1
 kind: Secret
 metadata:
@@ -30,9 +29,9 @@ metadata:
   namespace: longhorn-system
 type: Opaque
 stringData:
-  AWS_ENDPOINTS: # https://s3.some-real-region.backblazeb2.com
-  AWS_ACCESS_KEY_ID: # keyID in backblaze
-  AWS_SECRET_ACCESS_KEY: # applicationKey in backblaze
+  AWS_ENDPOINTS: {{ .Values.backblaze.AWS_ENDPOINTS }}
+  AWS_ACCESS_KEY_ID: {{ .Values.backblaze.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: {{ .Values.backblaze.AWS_SECRET_ACCESS_KEY }}
 ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application

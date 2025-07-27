@@ -1,0 +1,6 @@
+gitea:
+  password: your-secure-password  # Replace with actual password
+backblaze:
+  AWS_ENDPOINTS: https://s3.some-real-region.backblazeb2.com  # Replace with actual endpoint
+  AWS_ACCESS_KEY_ID: your-key-id  # Replace with actual key ID
+  AWS_SECRET_ACCESS_KEY: your-application-key  # Replace with actual application key
