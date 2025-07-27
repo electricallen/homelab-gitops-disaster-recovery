@@ -64,6 +64,10 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 >   ```
 
 8. Restore all volumes from Backblaze using the Longhorn GUI
+1. Navigate to the volumes tab and recreate PVs
+
+    ![alt text](docs/image.png)
+    
 1. Connect to Gitea
     ```sh
     kubectl port-forward service/gitea-http -n gitea 8082:3000
