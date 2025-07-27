@@ -43,6 +43,8 @@ spec:
         value: keepUpdated
       - name: persistence.size
         value: 5Gi
+      - name: persistence.volumeName
+        value: pvc-gitea-shared-storage
       - name: postgresql-ha.enabled
         value: 'false'
       - name: postgresql.enabled
