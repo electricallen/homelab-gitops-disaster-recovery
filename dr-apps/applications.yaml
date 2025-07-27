@@ -44,15 +44,15 @@ spec:
       - name: persistence.size
         value: 5Gi
       - name: postgresql-ha.enabled
-        value: false
+        value: 'false'
       - name: postgresql.enabled
-        value: true
+        value: 'true'
       - name: postgresql.primary.persistence.size
         value: 5Gi
       - name: valkey-cluster.enabled
-        value: false
+        value: 'false'
       - name: valkey.enabled
-        value: true
+        value: 'true'
     repoURL: https://dl.gitea.com/charts/
     targetRevision: 12.1.2
   destination:
