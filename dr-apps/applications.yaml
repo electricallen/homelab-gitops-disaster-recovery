@@ -46,7 +46,7 @@ spec:
       - name: persistence.volumeName
         value: pvc-gitea-shared-storage
       - name: postgresql.primary.persistence.existingClaim
-        value: data-gitea-postgresql
+        value: pvc-data-gitea-postgresql
       - name: postgresql-ha.enabled
         value: 'false'
       - name: postgresql.enabled
