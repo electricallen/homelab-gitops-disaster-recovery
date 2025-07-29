@@ -55,20 +55,13 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```sh
     kubectl port-forward service/longhorn-frontend -n longhorn-system 8081:80
     ```
-1. Add the S3 URL for the default backup target at `Settings > Backup Target`
-
-> [!NOTE]  
-> The S3 API requires a region, but this isn't used by Backblaze. If your bucket is `foo` on `us-east-005.backblazeb2.com`, use:
->   ```sh
->     "backup-target": s3://foo@region/longhorn # `region` is ignored!
->   ```
-
-8. Restore all volumes from Backblaze using the Longhorn GUI
-1. Navigate to the volumes tab and recreate PVs
+1. Restore all volumes from Backblaze using the Longhorn GUI
+1. Navigate to the volumes tab and recreate PVs/PVCs
 
     ![alt text](docs/image.png)
     
-1. Connect to Gitea
+1. Sync the Gitea application from the ArgoCD GUI
+1. Connect to Gitea and validate repo contents have been restored
     ```sh
     kubectl port-forward service/gitea-http -n gitea 8082:3000
     ```
