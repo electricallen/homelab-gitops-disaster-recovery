@@ -44,18 +44,18 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
     ```sh
     helm template bootstrap | kubectl apply -f -
     ```
-1. Connect to the ArgoCD GUI and sync the app-of-apps
+1. Connect to the ArgoCD GUI and sync the Longhorn application. You may have to sync a couple times to get a healthy result.
     ```sh
     kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d
     # Note the admin password
     kubectl port-forward service/argocd-server -n argocd 8080:443
     # open the browser on http://localhost:8080 and accept the certificate
     ```
-1. Sync the longhorn app. Connect to the Longhorn GUI
+1. Connect to the Longhorn GUI
     ```sh
     kubectl port-forward service/longhorn-frontend -n longhorn-system 8081:80
     ```
-1. Restore all volumes from Backblaze using the Longhorn GUI
+1. Restore all volumes from Backblaze using the Longhorn GUI, choosing `Use Previous Name`
 1. Navigate to the volumes tab and recreate PVs/PVCs
 
     ![alt text](docs/image.png)
