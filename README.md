@@ -18,6 +18,7 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 * The Kubernetes admin token
 * Backup restore credentials and URL
 * Gitea admin credentials
+* Vaultwarden admin token
 
 ### Playbook
 
@@ -64,4 +65,11 @@ In order to recover from cluster failure or migrate to a new cluster, the follow
 1. Connect to Gitea and validate repo contents have been restored
     ```sh
     kubectl port-forward service/gitea-http -n gitea 8082:3000
+    ```
+1. Sync the app-of-apps application in the ArgoCD GUI
+1. Sync the Gitea sub-application in the ArgoCD GUI. You may have to manually delete the existing gitea replicaset with:
+    ```sh
+    kubectl -n gitea get rs
+    # Note oldest running replicaset name
+    kubectl -n gitea delete rs <replicaSetName>
     ```

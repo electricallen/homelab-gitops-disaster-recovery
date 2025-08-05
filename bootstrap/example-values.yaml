@@ -7,3 +7,7 @@ backblaze:
   AWS_ACCESS_KEY_ID: your-key-id  
   AWS_SECRET_ACCESS_KEY: your-application-key  
   s3Url: s3://myBucket@placeHolderRegion/longhorn # `placeHolderRegion` is ignored! 
+vaultwarden:
+  # Use an argon2id hash for the admin token; here for `R@ndomTokenString`
+  #     https://github.com/dani-garcia/vaultwarden/wiki/Enabling-admin-page#secure-the-admin_token
+  admin-token: $argon2id$v=19$m=19456,t=2,p=1$Vkx1VkE4RmhDMUhwNm9YVlhPQkVOZk1Yc1duSDdGRVYzd0Y5ZkgwaVg0Yz0$PK+h1ANCbzzmEKaiQfCjWw+hWFaMKvLhG2PjRanH5Kk
